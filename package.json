@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "global": "^4.4.0",
+    "jest": "^27.2.3",
     "package.json": "^2.0.1"
   }
 }
