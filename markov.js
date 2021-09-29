@@ -8,6 +8,8 @@ class MarkovMachine {
   constructor(text) {
     let words = text.split(/[ \r\n]+/);
     this.words = words;
+    this.chains = this.makeChains();
+    //this.randomText = this.getText();
     // MORE CODE HERE
   }
 
@@ -41,8 +43,42 @@ class MarkovMachine {
 
   getText(numWords = 100) {
     // MORE CODE HERE
-    // pick random starting point
-    // loops until we hit null
-    // output the chain
+
+    let randomText;
+    let chainsKeys = Object.keys(this.chains);
+
+    let randomStart = getRandomIndex(chainsKeys);
+    let currKey;
+
+    randomText = chainsKeys[randomStart];
+    currKey = chainsKeys[randomStart];
+    let nextIndex;
+    let nextWord;
+    
+    while (numWords > 1) {
+      nextIndex = getRandomIndex(this.chains[currKey])
+      nextWord = this.chains[currKey][nextIndex];
+
+      if (nextWord === null) {
+        nextIndex = getRandomIndex(chainsKeys);
+        nextWord = chainsKeys[nextIndex];
+        randomText = randomText + ". " + nextWord;
+        currKey = nextWord;
+
+      } else {
+        randomText = randomText + " " + nextWord;
+        currKey = nextWord;
+      }
+      numWords--;
+    }
+    return randomText;
   }
+}
+
+function getRandomIndex(array) {
+
+  let randomIndex;
+  randomIndex = Math.floor(Math.random() * (array.length));
+
+  return randomIndex;
 }
